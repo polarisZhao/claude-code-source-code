@@ -7,14 +7,34 @@
 
 ---
 
-> **深度分析文档**: 完整的源码分析报告已发布在 [`docs/`](docs/) 目录下，包含中英双语版本：
-> - 遥测与隐私（无法退出的数据收集管道）
-> - 隐藏功能与模型代号（Tengu、Capybara、Fennec、Numbat）
-> - 卧底模式（在开源项目中隐藏 AI 身份）
-> - 远程控制与紧急开关（托管设置、feature flag）
-> - 未来路线图（Numbat 模型、KAIROS 自主模式、语音输入）
->
-> **英文文档**: [`docs/en/`](docs/en/) | **中文文档**: [`docs/zh/`](docs/zh/)
+## 深度分析文档 (`docs/`)
+
+基于 v2.1.88 反编译源码的分析报告，中英双语。
+
+```
+docs/
+├── en/                                    # English
+│   ├── 01-telemetry-and-privacy.md        # 遥测与隐私 — 双层数据管道，收集了什么，为什么无法退出
+│   ├── 02-hidden-features-and-codenames.md# 隐藏功能 — 模型代号（Capybara/Tengu/Numbat），feature flag，内外用户差异
+│   ├── 03-undercover-mode.md              # 卧底模式 — Anthropic 员工如何在开源项目中隐藏 AI 身份
+│   ├── 04-remote-control-and-killswitches.md # 远程控制 — 托管设置（拒绝就退出），紧急开关，模型覆盖
+│   └── 05-future-roadmap.md               # 未来路线图 — Numbat 模型、KAIROS 自主代理、语音模式、未上线工具
+│
+└── zh/                                    # 中文
+    ├── 01-遥测与隐私分析.md
+    ├── 02-隐藏功能与模型代号.md
+    ├── 03-卧底模式分析.md
+    ├── 04-远程控制与紧急开关.md
+    └── 05-未来路线图.md
+```
+
+| # | 主题 | 核心发现 | 链接 |
+|---|------|---------|------|
+| 01 | **遥测与隐私** | 双层分析管道（1P→Anthropic, Datadog）。环境指纹、进程指标、每个事件携带会话/用户 ID。**没有面向用户的退出开关**。`OTEL_LOG_TOOL_DETAILS=1` 可记录完整工具输入。 | [EN](docs/en/01-telemetry-and-privacy.md) · [中文](docs/zh/01-遥测与隐私分析.md) |
+| 02 | **隐藏功能与代号** | 动物代号体系（Capybara v8, Tengu, Fennec→Opus 4.6, **Numbat** 下一代）。Feature flag 用随机词对掩盖用途。内部用户获得更好的 prompt 和验证代理。隐藏命令：`/btw`、`/stickers`。 | [EN](docs/en/02-hidden-features-and-codenames.md) · [中文](docs/zh/02-隐藏功能与模型代号.md) |
+| 03 | **卧底模式** | Anthropic 员工在公开仓库自动进入卧底模式。模型指令："**不要暴露你的掩护身份**" — 剥离所有 AI 归属，commit 看起来像人类写的。**没有强制关闭选项。** | [EN](docs/en/03-undercover-mode.md) · [中文](docs/zh/03-卧底模式分析.md) |
+| 04 | **远程控制与 Killswitch** | 每小时轮询 `/api/claude_code/settings`。危险变更弹出阻塞对话框 — **拒绝 = 程序退出**。6+ 紧急开关（绕过权限、快速模式、语音模式、分析 sink）。GrowthBook 可无同意改变任何用户行为。 | [EN](docs/en/04-remote-control-and-killswitches.md) · [中文](docs/zh/04-远程控制与紧急开关.md) |
+| 05 | **未来路线图** | **Numbat** 代号确认。Opus 4.7 / Sonnet 4.8 开发中。**KAIROS** = 完全自主代理模式，心跳 `<tick>`、推送通知、PR 订阅。语音模式（push-to-talk）已就绪。发现 17 个未上线工具。 | [EN](docs/en/05-future-roadmap.md) · [中文](docs/zh/05-未来路线图.md) |
 
 ---
 
